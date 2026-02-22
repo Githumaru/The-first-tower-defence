@@ -56,3 +56,18 @@ export type LevelConfig = {
   tower_types: TowerType[];
   waves: Wave[];
 };
+
+export type GameResultCreate = {
+  level_id: number;
+  level_version?: number;
+  player_name: string;
+  waves_completed: number;
+  score: number;
+  time_played: number; // seconds
+};
+
+export type GameResultResponse = {
+  status: "accepted" | "rejected" | "error";
+  rank?: number;
+  message?: string;
+};
