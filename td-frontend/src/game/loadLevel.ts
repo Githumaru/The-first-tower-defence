@@ -1,5 +1,4 @@
-﻿import { DEFAULT_LEVEL } from "./defaultLevel";
-import type { LevelConfig } from "./types";
+﻿import type { LevelConfig } from "./types";
 
 function isFiniteNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
@@ -42,19 +41,15 @@ function looksLikeLevelConfig(value: unknown): value is LevelConfig {
 export async function loadLevel(levelId: number): Promise<LevelConfig> {
   const url = `/api/v1/levels/${levelId}`;
 
-  try {
-    const res = await fetch(url, { method: "GET" });
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-
-    const data: unknown = await res.json();
-    if (!looksLikeLevelConfig(data)) {
-      throw new Error("Bad level shape");
-    }
-
-    return data;
-  } catch {
-    return DEFAULT_LEVEL;
+  const res = await fetch(url, { method: "GET" });
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
   }
+
+  const data: unknown = await res.json();
+  if (!looksLikeLevelConfig(data)) {
+    throw new Error("Bad level shape");
+  }
+
+  return data;
 }
